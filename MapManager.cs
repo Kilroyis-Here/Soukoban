@@ -12,7 +12,7 @@ using UnityEngine.Tilemaps;
 public class MapManager : MonoBehaviour
 {
     // タイルの種類
-    private enum tileType
+    private enum TileType
     {
         // 何も無い
         NONE, 
@@ -40,7 +40,7 @@ public class MapManager : MonoBehaviour
     private int _stageColumns; 
 
     [SerializeField, Header("タイル情報を管理する二次元配列")]
-    private tileType[,] _tiles;
+    private TileType[,] _tiles;
 
     [SerializeField, Header("タイルのサイズ")]
     private float _tileSize;
@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
     private Dictionary<GameObject, Vector2Int> _gameObjectPosTable = new Dictionary<GameObject, Vector2Int>();
 
 
-   　private void Awake()
+    private void Awake()
     {
         // タイルの情報を読み込む
         LoadTileData(); 
@@ -94,13 +94,13 @@ public class MapManager : MonoBehaviour
         string[] lines = SplitMapData();
 
         // タイルの列数を計算
-        string[] nums = lines[0].Split(new[] { ',' });
+        string[] rows = lines[0].Split(new[] { ',' });
 
         // タイルの列数と行数を保持
         // 行数
         _stageRows = lines.Length; 
         // 列数
-        _stageColumns = nums.Length; 
+        _stageColumns = rows.Length; 
 
         // タイル情報を int 型の２次元配列で保持
         _tiles = new tileType[_stageColumns, _stageRows];
@@ -108,11 +108,11 @@ public class MapManager : MonoBehaviour
         {
             // 一文字ずつ取得
             string st = lines[y];
-            nums = st.Split(new[] { ',' });
+            rows = st.Split(new[] { ',' });
             for (int x = 0; x < _stageColumns; x++)
             {
                 // 読み込んだ文字を数値に変換して保持
-                _tiles[x, y] = (tileType)int.Parse(nums[x]);
+                _tiles[x, y] = (tileType)int.Parse(rows[x]);
             }
         }
     }
